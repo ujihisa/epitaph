@@ -1,0 +1,4 @@
+# epitaph: A.new.f(10)
+class A
+  def f(x)
+    x + 2

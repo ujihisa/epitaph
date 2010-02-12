@@ -1,6 +1,7 @@
 #!/usr/bin/env spec192
 $: << File.expand_path(__FILE__) + '/../lib'
 require 'epitaph'
+require 'tempfile'
 
 describe 'Epitaph()' do
   it 'runs a definitive code' do
@@ -19,5 +20,20 @@ describe 'Epitaph()' do
       def f(x)
         x ** 2
     EOC
+
+    Epitaph(<<-EOC, 'A.new.f(10)').should == 'uj'
+    class A # How are you?
+      def f(x)
+        'uj
+    EOC
+  end
+end
+
+describe 'command `epitaph`' do
+  it '' do
+    a = Tempfile.new('a').path
+    pwd = File.dirname(File.expand_path(__FILE__)) + '/../'
+    system "#{pwd}bin/epitaph #{pwd}spec/sample.txt > #{a}"
+    File.read(a).should == "12\n"
   end
 end

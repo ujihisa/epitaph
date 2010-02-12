@@ -14,20 +14,24 @@ class Epitaph
       when :on_kw
         case v
         when "class"
-          stack.push 'end'
+          stack.push ';end'
         when "def"
-          stack.push 'end'
+          stack.push ';end'
         when "end"
-          abort "not match" unless stack.pop == 'end'
+          abort "not match" unless stack.pop == ';end'
         end
       when :on_lparen
         stack.push ')'
       when :on_rparen
         abort "not match" unless stack.pop == ')'
+      when :on_tstring_beg
+        stack.push v
+      when :on_tstring_end
+        stack.pop
       end
     end
-    terminator = stack.reverse.join(';')
-    @definitive_world = tuples.map(&:last).join << terminator
+    terminator = stack.reverse.join
+    @definitive_world = world.chomp + terminator
   end
 
   def run(you)

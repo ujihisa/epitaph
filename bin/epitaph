@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby192
+$: << '~/git/epitaph/lib'
+require 'epitaph'
+
+if $0 == __FILE__
+  world = File.read ARGV.shift
+  you = world[/# epitaph:(.*)/, 1]
+  begin
+    p Epitaph(world, you)
+  rescue SyntaxError
+    puts ':-s'
+  rescue
+    puts ':-]'
+  end
+end
