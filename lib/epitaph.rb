@@ -2,7 +2,7 @@
 require 'ripper'
 
 def Epitaph(world, you)
-  Epitaph.new(world).run(you)
+  Epitaph.new(world).value(you)
 end
 
 class Epitaph
@@ -34,8 +34,19 @@ class Epitaph
     @definitive_world = world.chomp + terminator
   end
 
-  def run(you)
+  def value(you)
     eval @definitive_world + ';' + you
+  end
+
+  def locals(linenum)
+    $__epitaph_tmp = nil
+    a = @definitive_world.each_line.to_a
+    tmp = a[0...(linenum-1)].join +
+      '$__epitaph_tmp = local_variables' +
+      a[(linenum-1)..-1].join
+    eval tmp
+    A.new.f(10) # FIXME
+    $__epitaph_tmp
   end
 end
 

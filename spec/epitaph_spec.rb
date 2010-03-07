@@ -1,5 +1,5 @@
 #!/usr/bin/env spec192
-$: << File.expand_path(__FILE__) + '/../lib'
+$: << File.dirname(File.expand_path(__FILE__)) + '/../lib'
 require 'epitaph'
 require 'tempfile'
 
@@ -25,6 +25,17 @@ describe 'Epitaph()' do
     class A # How are you?
       def f(x)
         'uj
+    EOC
+  end
+end
+
+describe 'Epitaph#locals' do
+  it 'lists the names of local variables on the given line' do
+    Epitaph.new(<<-EOC).locals(4).sort.should == [:a, :x]
+    class A # How are you?
+      def f(x)
+        a = 3
+
     EOC
   end
 end
