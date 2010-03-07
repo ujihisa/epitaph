@@ -19,3 +19,9 @@
 
 Tatsuhiro Ujihisa
 <http://ujihisa.blogspot.com/>
+
+## Epitaph.vim
+
+This Vim script is experimental.
+See the detail here:
+<http://ujihisa.blogspot.com/2010/02/what-i-made.html>
